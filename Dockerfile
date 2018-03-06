@@ -20,15 +20,18 @@ RUN apt-get update
 RUN apt-get install -y python
 RUN apt-get install -y libsodium
 RUN apt-get install -y wget
+RUN apt-get install -y build-essential
 
 ADD start.sh /start.sh
 RUN chmod a+x /*.sh
 
 RUN mkdir -p $WORK && \
     wget -qO- --no-check-certificate https://github.com/koolshare/shadowsocksr/archive/$BRANCH.tar.gz | tar -xzf - -C $WORK
-
-
-WORKDIR $WORK/shadowsocksr-$BRANCH/shadowsocks
+    
+RUN wget -qO- --no-check-certificate https://download.libsodium.org/libsodium/releases/LATEST.tar.gz | tar -xzf - -C $WORK  
+WORKDIR $WORK/libsodium-stable
+RUN ./configure && make -j2 && make install
+RUN ldconfig
 
 
 EXPOSE $SERVER_PORT
