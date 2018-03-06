@@ -13,7 +13,6 @@ ENV TIMEOUT         300
 ENV DNS_ADDR        8.8.8.8
 ENV DNS_ADDR_2      8.8.4.4
 
-ARG BRANCH=manyuser
 ARG WORK=~
 
 RUN apt-get update
@@ -25,7 +24,7 @@ ADD start.sh /start.sh
 RUN chmod a+x /*.sh
 
 RUN mkdir -p $WORK && \
-    wget -qO- --no-check-certificate https://github.com/koolshare/shadowsocksr/archive/$BRANCH.tar.gz | tar -xzf - -C $WORK
+    wget -qO- --no-check-certificate https://github.com/koolshare/shadowsocksr/archive/manyuser.tar.gz | tar -xzf - -C $WORK
     
 RUN wget -qO- --no-check-certificate https://download.libsodium.org/libsodium/releases/LATEST.tar.gz | tar -xzf - -C $WORK  
 WORKDIR $WORK/libsodium-stable
