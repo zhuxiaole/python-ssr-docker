@@ -21,6 +21,7 @@ ENV UDPSPEEDER_PASSWORD psw
 
 ENV UDP2RAW_VERSION 20180225.0
 ENV UDP2RAW_PORT 7123
+ENV UDP2RAW_PASSWORD psw
 
 RUN apt-get update
 RUN apt-get install -y python
@@ -35,7 +36,10 @@ RUN ./configure && make -j2 && make install
 RUN ldconfig
 
 RUN mkdir /udpspeeder
-RUN wget -qO- --no-check-certificate https://github.com/wangyu-/UDPspeeder/releases/download/$UDPSPEEDER_VERSION/speederv2_binaries.tar.gz | tar -xzf - -C /udpspeeder
+RUN wget -qO- --no-check-certificate https://github.com/wangyu-/UDPspeeder/releases/download/$UDPSPEEDER_VERSION/speederv2_binaries.tar.gz | tar -xzf - -C /udpspeeder/
+
+RUN mkdir /udp2raw
+RUN wget -qO- --no-check-certificate https://github.com/wangyu-/udp2raw-tunnel/releases/download/$UDP2RAW_VERSION/udp2raw_binaries.tar.gz | tar -xzf - -C /udp2raw/
 
 
 ADD start.sh /start.sh
