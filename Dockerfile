@@ -2,29 +2,34 @@ FROM debian:latest
 
 MAINTAINER zhuxiaole
 
+ENV SERVER_ADDR     0.0.0.0
+ENV SERVER_PORT     51348
+ENV PASSWORD        psw
+ENV METHOD          rc4-md5
+ENV PROTOCOL        auth_sha1_v4
+ENV PROTOCOLPARAM   32
+ENV OBFS            tls1.2_ticket_auth
+ENV TIMEOUT         300
+ENV DNS_ADDR        8.8.8.8
+ENV DNS_ADDR_2      8.8.4.4
 
-#Download applications
-RUN apt-get update \
-    && apt-get install -y libsodium-dev python git ca-certificates iptables --no-install-recommends
+ARG BRANCH=manyuser
+ARG WORK=~
+
+RUN apk --no-cache add python \
+    libsodium \
+    wget
+
+ADD start.sh /start.sh
+RUN chmod a+x /*.sh
+
+RUN mkdir -p $WORK && \
+    wget -qO- --no-check-certificate https://github.com/koolshare/shadowsocksr/archive/$BRANCH.tar.gz | tar -xzf - -C $WORK
 
 
-#Make ssr-mudb
-ENV PORT="465" \
-    PASSWORD="ssr-bbr-docker" \
-    METHOD="rc4-md5" \
-    PROTOCOL="auth_sha1_v4" \
-    OBFS="tls1.2_ticket_auth"
-
-RUN git clone -b akkariiin/master https://github.com/letssudormrf/shadowsocksr.git \
-    && cd shadowsocksr \
-    && bash initcfg.sh \
-    && sed -i 's/sspanelv2/mudbjson/' userapiconfig.py \
-    && python mujson_mgr.py -a -u MUDB -p ${PORT} -k ${PASSWORD} -m ${METHOD} -O ${PROTOCOL} -o ${OBFS} -G "#"
+WORKDIR $WORK/shadowsocksr-$BRANCH/shadowsocks
 
 
-#Execution environment
-COPY start.sh /root/
-RUN chmod a+x /root/start.sh
-WORKDIR /shadowsocksr
-ENTRYPOINT ["/root/start.sh"]
-CMD /root/start.sh
+EXPOSE $SERVER_PORT
+
+CMD ["/start.sh"]
