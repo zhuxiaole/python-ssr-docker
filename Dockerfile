@@ -45,7 +45,8 @@ RUN wget -qO- --no-check-certificate https://github.com/wangyu-/udp2raw-tunnel/r
 ADD start.sh /start.sh
 RUN chmod a+x /*.sh
 
-
+EXPOSE $UDPSPEEDER_PORT
+EXPOSE $UDP2RAW_PORT
 EXPOSE $SERVER_PORT
 
 CMD ["/start.sh"]
