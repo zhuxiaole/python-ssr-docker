@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM buildpack-deps:jessie-scm
 
 MAINTAINER zhuxiaole
 
