@@ -16,9 +16,10 @@ ENV DNS_ADDR_2      8.8.4.4
 ARG BRANCH=manyuser
 ARG WORK=~
 
-RUN apk --no-cache add python \
-    libsodium \
-    wget
+RUN apt-get update
+RUN apt-get install -y python
+RUN apt-get install -y libsodium
+RUN apt-get install -y wget
 
 ADD start.sh /start.sh
 RUN chmod a+x /*.sh
