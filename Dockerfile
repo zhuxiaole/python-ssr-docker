@@ -27,6 +27,7 @@ RUN apt-get update
 RUN apt-get install -y python
 RUN apt-get install -y wget
 RUN apt-get install -y build-essential
+RUN apt-get install -y iptables
 
 RUN wget -qO- --no-check-certificate https://github.com/koolshare/shadowsocksr/archive/manyuser.tar.gz | tar -xzf - -C /
 
