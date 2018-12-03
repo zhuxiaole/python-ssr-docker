@@ -18,7 +18,7 @@ RUN apt-get install -y python
 RUN apt-get install -y wget
 RUN apt-get install -y build-essential
 
-RUN wget -qO- --no-check-certificate https://github.com/koolshare/shadowsocksr/archive/manyuser.tar.gz | tar -xzf - -C /
+RUN wget -qO- --no-check-certificate https://github.com/shadowsocksrr/shadowsocksr/archive/3.2.2.tar.gz | tar -xzf - -C /
 
 RUN wget -qO- --no-check-certificate https://download.libsodium.org/libsodium/releases/LATEST.tar.gz | tar -xzf - -C /
 WORKDIR /libsodium-stable
