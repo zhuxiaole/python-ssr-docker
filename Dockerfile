@@ -2,7 +2,7 @@ FROM alpine
 
 MAINTAINER zhuxiaole
 
-ARG BRANCH=manyuser
+ARG VERSION=3.2.2
 ARG WORK=~
 
 ENV SERVER_ADDR     0.0.0.0
@@ -22,7 +22,7 @@ RUN apk --no-cache add python \
 
 
 RUN mkdir -p $WORK && \
-	wget -qO- --no-check-certificate https://github.com/HMBSbige/shadowsocksr/archive/$BRANCH.tar.gz | tar -xzf - -C $WORK
+	wget -qO- --no-check-certificate https://github.com/shadowsocksrr/shadowsocksr/archive/$VERSION.tar.gz | tar -xzf - -C $WORK
 
 ADD start.sh /start.sh
 RUN chmod a+x /*.sh
