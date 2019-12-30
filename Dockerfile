@@ -2,8 +2,8 @@ FROM alpine
 
 MAINTAINER zhuxiaole
 
-ARG VERSION=3.2.2
-ARG WORK=~
+ENV SSR_VERSION=3.2.2
+ENV WORK=~
 
 ENV SERVER_ADDR     0.0.0.0
 ENV SERVER_PORT     51348
@@ -22,7 +22,7 @@ RUN apk --no-cache add python \
 
 
 RUN mkdir -p $WORK && \
-	wget -qO- --no-check-certificate https://github.com/shadowsocksrr/shadowsocksr/archive/$VERSION.tar.gz | tar -xzf - -C $WORK
+	wget -qO- --no-check-certificate https://github.com/shadowsocksrr/shadowsocksr/archive/$SSR_VERSION.tar.gz | tar -xzf - -C $WORK
 
 ADD start.sh /start.sh
 RUN chmod a+x /*.sh
